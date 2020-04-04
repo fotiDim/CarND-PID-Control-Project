@@ -1,5 +1,6 @@
 #ifndef PID_H
 #define PID_H
+#include <iostream>
 
 class PID {
  public:
@@ -31,13 +32,11 @@ class PID {
    */
   double TotalError();
 
- private:
   /**
-   * PID Errors
+   * Calculate the optimal PID coefficients using the Twiddle algorithm.
+   * @output The current sum of dp
    */
-  double p_error;
-  double i_error;
-  double d_error;
+  double Twiddle(double tolerance);
 
   /**
    * PID Coefficients
@@ -45,6 +44,22 @@ class PID {
   double Kp;
   double Ki;
   double Kd;
+
+ private:
+  /**
+   * PID Errors
+   */
+  double p_error = 0;
+  double i_error = 0;
+  double d_error = 0;
+  
+  // Twiddle params
+  // double best_err = std::numeric_limits<double>::max();
+  // double dp[3] = { 1, 1, 1 };
+  // double accum_err2 = 0.0;
+  // int iteration = 0;
+  
+  // void OptimizeCoefficient(double &coefficient, double &deltaCoefficient);
 };
 
 #endif  // PID_H
